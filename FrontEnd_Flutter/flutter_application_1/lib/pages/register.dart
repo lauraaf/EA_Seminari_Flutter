@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/userModel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
-
-class LogInPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LogInPageState createState() => _LogInPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _mailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
-  Future<void> _login() async {
+  Future<void> _registrarse() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
     // URL de la API de autenticación HTTPS
-    final url = Uri.parse('http://10.0.2.2:3000/api/user/logIn');
+    final url = Uri.parse('http://10.0.2.2:3000/api/user/newUser');
 
     try {
       // Realizar solicitud POST con usuario y contraseña
@@ -33,7 +32,9 @@ class _LogInPageState extends State<LogInPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'name': _usernameController.text,
+          'mail': _mailController.text,
           'password': _passwordController.text,
+          'comment': _commentController.text,
         }),
       );
 
@@ -41,20 +42,24 @@ class _LogInPageState extends State<LogInPage> {
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('¡Inicio de sesion exitoso!'),
+            content: Text('¡Registrado con exito!'),
             duration: Duration(seconds: 3),
           ),
         );
-
-        final responseData = json.decode(response.body);
-        final name = responseData['name'];
-        final mail = responseData['mail'];
-        final comment = responseData['comment'];
-
-        Provider.of<UserModel>(context, listen: false).setUser(name, mail, comment);
-        
         context.go('/home');
+        /*final token = responseData['token']; // El token de autenticación de la respuesta
 
+        if (token != null) {
+          // Si la autenticación es exitosa, navega a la página principal
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(token: token)),
+          );
+        } else {
+          setState(() {
+            _errorMessage = 'Error: No se recibió un token de autenticación';
+          });
+        }*/
       } else {
         setState(() {
           _errorMessage = 'Error: Usuario o contraseña incorrectos';
@@ -71,15 +76,14 @@ class _LogInPageState extends State<LogInPage> {
     }
   }
 
-  Future<void> _registrarseReturn() async {
-    context.go('/register');
+  Future<void> _logInreturn() async {
+    context.go('/login');
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Iniciar Sesión')),
+      appBar: AppBar(title: Text('Registrarse')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -90,17 +94,25 @@ class _LogInPageState extends State<LogInPage> {
               decoration: InputDecoration(labelText: 'Usuario'),
             ),
             TextField(
+              controller: _mailController,
+              decoration: InputDecoration(labelText: 'Mail'),
+            ),
+            TextField(
               controller: _passwordController,
               decoration: InputDecoration(labelText: 'Contraseña'),
               obscureText: true,
+            ),
+            TextField(
+              controller: _commentController,
+              decoration: InputDecoration(labelText: 'Comentario'),
             ),
             SizedBox(height: 16),
             if (_isLoading)
               CircularProgressIndicator()
             else
               ElevatedButton(
-                onPressed: _login,
-                child: Text('Iniciar Sesión'),
+                onPressed: _registrarse,
+                child: Text('Registrarse'),
               ),
             if (_errorMessage != null)
               Padding(
@@ -111,8 +123,8 @@ class _LogInPageState extends State<LogInPage> {
                 ),
               ),
             ElevatedButton(
-              onPressed: _registrarseReturn,
-              child: Text('Registrarse'),
+              onPressed: _logInreturn,
+              child: Text('Volver'),
             ),
           ],
         ),

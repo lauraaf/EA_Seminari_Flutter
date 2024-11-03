@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/userModel.dart';
 import 'package:flutter_application_1/pages/experiencies.dart';
 import 'package:flutter_application_1/pages/logIn.dart';
+import 'package:flutter_application_1/pages/perfil.dart';
+import 'package:flutter_application_1/pages/register.dart';
 import 'package:flutter_application_1/pages/user.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/pages/home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp( ChangeNotifierProvider(
+      create: (_) => UserModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +27,10 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/login',
         builder: (context, state) => LogInPage(),
+      ),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => RegisterPage(),
       ),
       ShellRoute(
         builder: (context, state, child) {
@@ -36,6 +48,10 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/experiencies',
             builder: (context, state) => ExperienciesPage(),
+          ),
+          GoRoute(
+            path: '/perfil',
+            builder: (context, state) => PerfilPage(),
           ),
         ],
       ),
@@ -75,7 +91,9 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
       context.go('/usuarios'); // Navega a UsersPage
     } else if (index == 2) {
       context.go('/experiencies'); // Navega a UsersPage
-    } 
+    } else if (index == 3) {
+      context.go('/perfil'); // Navega a UsersPage
+    }  
   }
 
   @override
@@ -85,6 +103,8 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: const Color.fromARGB(255, 92, 14, 105),
+        unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -97,6 +117,10 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
           BottomNavigationBarItem(
             icon: Icon(Icons.local_activity),
             label: 'Experiencias',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
           ),
         ],
       ),
