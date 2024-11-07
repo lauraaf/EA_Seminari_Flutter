@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/models/userModel.dart';
-import 'package:flutter_application_1/pages/experiencies.dart';
-import 'package:flutter_application_1/pages/logIn.dart';
-import 'package:flutter_application_1/pages/perfil.dart';
-import 'package:flutter_application_1/pages/register.dart';
-import 'package:flutter_application_1/pages/user.dart';
-import 'package:flutter_application_1/pages/home.dart';
+import 'package:flutter_application_1/screen/experiencies.dart';
+import 'package:flutter_application_1/screen/logIn.dart';
+import 'package:flutter_application_1/screen/perfil.dart';
+import 'package:flutter_application_1/screen/register.dart';
+import 'package:flutter_application_1/screen/user.dart';
+import 'package:flutter_application_1/screen/home.dart';
 import 'package:provider/provider.dart';
 
 void main() {
