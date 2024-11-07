@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/userModel.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -53,7 +53,7 @@ class _LogInPageState extends State<LogInPage> {
 
         Provider.of<UserModel>(context, listen: false).setUser(name, mail, comment);
         
-        context.go('/home');
+        Get.toNamed('/home');
 
       } else {
         setState(() {
@@ -72,7 +72,7 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   Future<void> _registrarseReturn() async {
-    context.go('/register');
+    Get.toNamed('/register');
   }
 
 
