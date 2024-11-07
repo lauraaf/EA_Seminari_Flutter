@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
             duration: Duration(seconds: 3),
           ),
         );
-        context.go('/home');
+        Get.toNamed('/home');
         /*final token = responseData['token']; // El token de autenticación de la respuesta
 
         if (token != null) {
@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _logInreturn() async {
-    context.go('/login');
+    Get.toNamed('/login');
   }
 
   @override

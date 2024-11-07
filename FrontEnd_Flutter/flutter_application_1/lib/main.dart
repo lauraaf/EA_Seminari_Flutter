@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_application_1/models/userModel.dart';
 import 'package:flutter_application_1/pages/experiencies.dart';
 import 'package:flutter_application_1/pages/logIn.dart';
 import 'package:flutter_application_1/pages/perfil.dart';
 import 'package:flutter_application_1/pages/register.dart';
 import 'package:flutter_application_1/pages/user.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/pages/home.dart';
 import 'package:provider/provider.dart';
 
@@ -18,53 +18,40 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  
-
-  final GoRouter _router = GoRouter(
-    initialLocation: '/login',
-    routes: [
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => LogInPage(),
-      ),
-      GoRoute(
-        path: '/register',
-        builder: (context, state) => RegisterPage(),
-      ),
-      ShellRoute(
-        builder: (context, state, child) {
-          return BottomNavScaffold(child: child);
-        },
-        routes: [
-          GoRoute(
-            path: '/home',
-            builder: (context, state) => HomePage(),
-          ),
-          GoRoute(
-            path: '/usuarios',
-            builder: (context, state) => UserPage(),
-          ),
-          GoRoute(
-            path: '/experiencies',
-            builder: (context, state) => ExperienciesPage(),
-          ),
-          GoRoute(
-            path: '/perfil',
-            builder: (context, state) => PerfilPage(),
-          ),
-        ],
-      ),
-    ],
-  );
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      routerDelegate: _router.routerDelegate,
-      routeInformationParser: _router.routeInformationParser,
-      routeInformationProvider: _router.routeInformationProvider,
+      initialRoute: '/login',
+      getPages: [
+        // Ruta de inicio de sesión
+        GetPage(
+          name: '/login',
+          page: () => LogInPage(),
+        ),
+        // Ruta de registro
+        GetPage(
+          name: '/register',
+          page: () => RegisterPage(),
+        ),
+        // Ruta de la pantalla principal con BottomNavScaffold
+        GetPage(
+          name: '/home',
+          page: () => BottomNavScaffold(child: HomePage()),
+        ),
+        GetPage(
+          name: '/usuarios',
+          page: () => BottomNavScaffold(child: UserPage()),
+        ),
+        GetPage(
+          name: '/experiencies',
+          page: () => BottomNavScaffold(child: ExperienciesPage()),
+        ),
+        GetPage(
+          name: '/perfil',
+          page: () => BottomNavScaffold(child: PerfilPage()),
+        ),
+      ],
     );
   }
 }
@@ -85,15 +72,22 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 0) {
-      context.go('/home'); // Navega a HomePage
-    } else if (index == 1) {
-      context.go('/usuarios'); // Navega a UsersPage
-    } else if (index == 2) {
-      context.go('/experiencies'); // Navega a UsersPage
-    } else if (index == 3) {
-      context.go('/perfil'); // Navega a UsersPage
-    }  
+    
+    // Navegación usando Get.toNamed()
+    switch (_selectedIndex) {
+      case 0:
+        Get.toNamed('/home');
+        break;
+      case 1:
+        Get.toNamed('/usuarios');
+        break;
+      case 2:
+        Get.toNamed('/experiencies');
+        break;
+      case 3:
+        Get.toNamed('/perfil');
+        break;
+    }
   }
 
   @override
