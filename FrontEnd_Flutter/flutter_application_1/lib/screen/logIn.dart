@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/userModel.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/services/user.dart';
 import 'dart:convert';
 
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class _LogInPageState extends State<LogInPage> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  Future<void> _login() async {
+/*   Future<void> _login() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -73,7 +73,7 @@ class _LogInPageState extends State<LogInPage> {
 
   Future<void> _registrarseReturn() async {
     Get.toNamed('/register');
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

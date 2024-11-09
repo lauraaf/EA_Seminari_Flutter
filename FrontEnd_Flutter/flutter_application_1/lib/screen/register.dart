@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/services/user.dart';
 import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  Future<void> _registrarse() async {
+ /*  Future<void> _registrarse() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> _logInreturn() async {
     Get.toNamed('/login');
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Gracias por empezar a programar en Flutter BB',
                     style: TextStyle(
                       fontSize: 20,
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // Corazón animado
                   AnimatedBuilder(
                     animation: _animation,

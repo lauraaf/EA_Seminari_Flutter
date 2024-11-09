@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/models/userModel.dart';
+import 'package:flutter_application_1/Widgets/bottomNavigationBar.dart';
 import 'package:flutter_application_1/screen/experiencies.dart';
 import 'package:flutter_application_1/screen/logIn.dart';
 import 'package:flutter_application_1/screen/perfil.dart';
 import 'package:flutter_application_1/screen/register.dart';
 import 'package:flutter_application_1/screen/user.dart';
 import 'package:flutter_application_1/screen/home.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp( ChangeNotifierProvider(
-      create: (_) => UserModel(),
-      child: MyApp(),
-    ),
-  );
+  runApp(
+    MyApp(),
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -56,7 +53,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class BottomNavScaffold extends StatefulWidget {
+/* class BottomNavScaffold extends StatefulWidget {
   final Widget child;
 
   const BottomNavScaffold({required this.child});
@@ -72,7 +69,7 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
     setState(() {
       _selectedIndex = index;
     });
-    
+
     // Navegación usando Get.toNamed()
     switch (_selectedIndex) {
       case 0:
@@ -120,4 +117,4 @@ class _BottomNavScaffoldState extends State<BottomNavScaffold> {
       ),
     );
   }
-}
+} */
