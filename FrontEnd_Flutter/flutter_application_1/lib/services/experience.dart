@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 
 class ExperienceService {
-  final String baseUrl = "http://10.0.2.2:3000"; // URL de tu backend
+  final String baseUrl = "http://127.0.0.1:3000"; // URL de tu backend
   final Dio dio = Dio(); // Usa el prefijo 'Dio' para referenciar la clase Dio
   var statusCode;
   var data;
@@ -17,7 +17,7 @@ class ExperienceService {
     print('try');
     //Aquí llamamos a la función request
     print('request');
-    // Utilizar Dio para enviar la solicitud POST a http://10.0.2.2:3000/experiencias
+    // Utilizar Dio para enviar la solicitud POST a http://127.0.0.1:3000/experiencias
     Response response = await dio.post('$baseUrl/experiencias', data: newExperience.toJson());
     //En response guardamos lo que recibimos como respuesta
     //Printeamos los datos recibidos
@@ -76,7 +76,7 @@ class ExperienceService {
 
    
 
-    // Utilizar Dio para enviar la solicitud POST a http://10.0.2.2:3000/experiencias
+    // Utilizar Dio para enviar la solicitud POST a http://127.0.0.1:3000/experiencias
     Response response = await dio.put('$baseUrl/experiencias/$id', data: newExperience.toJson());
     //En response guardamos lo que recibimos como respuesta
     //Printeamos los datos recibidos

@@ -7,7 +7,7 @@ export interface usersInterface{
     comment: string
 }
 export type UsersInterfacePublicInfo = Pick<usersInterface, 'name' | 'comment'>
-export type UsersInterfacePrivateInfo = Pick<usersInterface, 'name' | 'password'>
+export type UsersInterfacePrivateInfo = Pick<usersInterface, 'mail' | 'password'>
 export type newUserInfo = Omit<usersInterface,'id'>
 
 export const usersSchema = new Schema<usersInterface>({

@@ -8,9 +8,9 @@ export const getEntries = {
     findById: async(id:string)=>{
         return await usersofDB.findOne({name:id});
     },
-    findIdAndPassword: async(name:string,password:string): Promise<usersInterface | null>=>{
+    findIdAndPassword: async(mail:string,password:string): Promise<usersInterface | null>=>{
         // Si falla quitar el name:name por name, pero no deberia.
-        return await usersofDB.findOne({name:name}).exec()
+        return await usersofDB.findOne({mail:mail}).exec()
         .then(userResponse=>{
             if (userResponse == null || userResponse.password != password){
                 return null;

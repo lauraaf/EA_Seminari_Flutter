@@ -1,84 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/services/user.dart';
-import 'dart:convert';
+import 'package:flutter_application_1/controllers/registerController.dart';
 
-class RegisterPage extends StatefulWidget {
-  @override
-  _RegisterPageState createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _mailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _commentController = TextEditingController();
-  bool _isLoading = false;
-  String? _errorMessage;
-
- /*  Future<void> _registrarse() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    // URL de la API de autenticación HTTPS
-    final url = Uri.parse('http://10.0.2.2:3000/api/user/newUser');
-
-    try {
-      // Realizar solicitud POST con usuario y contraseña
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'name': _usernameController.text,
-          'mail': _mailController.text,
-          'password': _passwordController.text,
-          'comment': _commentController.text,
-        }),
-      );
-
-      // Verificar si la solicitud fue exitosa
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡Registrado con exito!'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-        Get.toNamed('/home');
-        /*final token = responseData['token']; // El token de autenticación de la respuesta
-
-        if (token != null) {
-          // Si la autenticación es exitosa, navega a la página principal
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage(token: token)),
-          );
-        } else {
-          setState(() {
-            _errorMessage = 'Error: No se recibió un token de autenticación';
-          });
-        }*/
-      } else {
-        setState(() {
-          _errorMessage = 'Error: Usuario o contraseña incorrectos';
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _errorMessage = 'Error: No se pudo conectar con la API';
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _logInreturn() async {
-    Get.toNamed('/login');
-  } */
+class RegisterPage extends StatelessWidget {
+  final RegisterController registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -90,43 +15,56 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: _usernameController,
+              controller: registerController.nameController,
               decoration: InputDecoration(labelText: 'Usuario'),
             ),
             TextField(
-              controller: _mailController,
-              decoration: InputDecoration(labelText: 'Mail'),
+              controller: registerController.mailController,
+              decoration: InputDecoration(labelText: 'Correo Electrónico'),
             ),
             TextField(
-              controller: _passwordController,
+              controller: registerController.passwordController,
               decoration: InputDecoration(labelText: 'Contraseña'),
               obscureText: true,
             ),
             TextField(
-              controller: _commentController,
+              controller: registerController.commentController,
               decoration: InputDecoration(labelText: 'Comentario'),
             ),
             SizedBox(height: 16),
-            if (_isLoading)
-              CircularProgressIndicator()
-            else
-              ElevatedButton(
-                onPressed: _registrarse,
-                child: Text('Registrarse'),
-              ),
-            if (_errorMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  _errorMessage!,
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            SizedBox(
-              height: 16,
-            ),
+            
+            // Mostrar CircularProgressIndicator o botón de registro según el estado de carga
+            Obx(() {
+              if (registerController.isLoading.value) {
+                return CircularProgressIndicator();
+              } else {
+                return ElevatedButton(
+                  onPressed: registerController.signUp,
+                  child: Text('Registrarse'),
+                );
+              }
+            }),
+
+            // Mostrar mensaje de error si existe
+            Obx(() {
+              if (registerController.errorMessage.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    registerController.errorMessage.value,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            }),
+
+            SizedBox(height: 16),
+            
+            // Botón para volver a la página de inicio de sesión
             ElevatedButton(
-              onPressed: _logInreturn,
+              onPressed: () => Get.toNamed('/login'),
               child: Text('Volver'),
             ),
           ],
@@ -135,3 +73,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+

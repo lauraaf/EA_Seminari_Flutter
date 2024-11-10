@@ -15,11 +15,11 @@ const PORT = 3000;
 
 app.get('/ping', (_req , res) => {
     console.log('ping recivido correctamente')
-    res.send('pinged')
+    res.send('pinged Flutter')
 })
 
-app.use('/api/user',userRouter)
-app.use('/api/experiencias',experienciasRouter)
+app.use('/user',userRouter)
+app.use('/experiencias',experienciasRouter)
 
 app.listen(PORT, () => {
     console.log('el servidor esta escuchando en el puerto '+ PORT)
