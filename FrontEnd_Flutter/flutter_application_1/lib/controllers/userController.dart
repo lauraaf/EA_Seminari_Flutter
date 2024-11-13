@@ -17,20 +17,23 @@ class UserController extends GetxController {
   void logIn() async {
     // Validación de campos
     if (mailController.text.isEmpty || passwordController.text.isEmpty) {
-      Get.snackbar('Error', 'Campos vacíos', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'Campos vacíos',
+          snackPosition: SnackPosition.BOTTOM);
       return;
     }
 
     // Validación de formato de correo electrónico
     if (!GetUtils.isEmail(mailController.text)) {
-      Get.snackbar('Error', 'Correo electrónico no válido', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'Correo electrónico no válido',
+          snackPosition: SnackPosition.BOTTOM);
       return;
     }
+    print('estoy en el login de usercontroller');
 
     final logIn = (
-          mail: mailController.text,
-          password: passwordController.text,
-        );
+      mail: mailController.text,
+      password: passwordController.text,
+    );
 
     // Iniciar el proceso de inicio de sesión
     isLoading.value = true;
@@ -39,6 +42,8 @@ class UserController extends GetxController {
     try {
       // Llamada al servicio para iniciar sesión
       final responseData = await userService.logIn(logIn);
+
+      print('el response data es:${ responseData}');
 
       if (responseData != null) {
         // Manejo de respuesta exitosa

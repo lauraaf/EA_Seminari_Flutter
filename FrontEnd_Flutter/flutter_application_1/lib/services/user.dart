@@ -3,7 +3,8 @@ import 'package:flutter_application_1/models/userModel.dart';
 import 'package:dio/dio.dart';
 
 class UserService {
-  final String baseUrl = "http://127.0.0.1:3000"; // URL de tu backend
+  //final String baseUrl = "http://127.0.0.1:3000"; // URL de tu backend Web
+  final String baseUrl = "http://10.0.2.2:3000"; // URL de tu backend Android
   final Dio dio = Dio(); // Usa el prefijo 'Dio' para referenciar la clase Dio
   var statusCode;
   var data;
@@ -15,7 +16,8 @@ class UserService {
     //Aquí llamamos a la función request
     print('request');
     // Utilizar Dio para enviar la solicitud POST a http://127.0.0.1:3000/user
-    Response response = await dio.post('$baseUrl/user/newUser', data: newUser.toJson());
+    Response response =
+        await dio.post('$baseUrl/user/newUser', data: newUser.toJson());
     print('response');
     //En response guardamos lo que recibimos como respuesta
     //Printeamos los datos recibidos
@@ -114,6 +116,8 @@ class UserService {
     print('try');
     //Aquí llamamos a la función request
     print('request');
+
+    print('el login es:${logIn}');
 
     Response response =
         await dio.post('$baseUrl/user/logIn', data: logInToJson(logIn));
