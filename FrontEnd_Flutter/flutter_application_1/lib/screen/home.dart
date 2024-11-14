@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controllers/userModelController.dart';
+import 'package:get/get.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,6 +31,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserModelController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
