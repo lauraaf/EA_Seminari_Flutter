@@ -5,9 +5,9 @@ import { Request, Response } from 'express'
 
 export async function logIn(req:Request,res:Response):Promise<Response> {
     try{
-        const { name,password } = req.body as UsersInterfacePrivateInfo;
-        const user:usersInterface|null = await userServices.getEntries.findIdAndPassword(name, password);
-        console.log("Logeao");
+        const { mail,password } = req.body as UsersInterfacePrivateInfo;
+        const user:usersInterface|null = await userServices.getEntries.findIdAndPassword(mail, password);
+        console.log("Logeao:",user);
         if (user!=null){
             return res.status(200).json(user);
         } else {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/services/experience.dart';
 import 'dart:convert';
 
 
@@ -22,10 +22,10 @@ class _ExperienciesPageState extends State<ExperienciesPage> {
   @override
   void initState() {
     super.initState();
-    fetchData(); // Llamamos a la función para obtener datos cuando la página se carga
+   // fetchData(); // Llamamos a la función para obtener datos cuando la página se carga
   }
 
-  Future<void> fetchData() async {
+/*   Future<void> fetchData() async {
     try {
       final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/experiencias')); // Cambia el puerto y la ruta según tu configuración
 
@@ -40,7 +40,7 @@ class _ExperienciesPageState extends State<ExperienciesPage> {
     } catch (e) {
       print('Error: $e');
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
