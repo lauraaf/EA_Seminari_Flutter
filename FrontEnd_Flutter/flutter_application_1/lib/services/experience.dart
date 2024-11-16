@@ -51,8 +51,9 @@ class ExperienceService {
     try {
       // Enviar solicitud GET para obtener las experiencias
       var res = await dio.get('$baseUrl/experiencias');
+      print(res);
       List<dynamic> responseData = res.data;
-
+      print(responseData);
       // Convertir la respuesta en una lista de ExperienceModel
       List<ExperienceModel> experiences = responseData
           .map((data) => ExperienceModel.fromJson(data))

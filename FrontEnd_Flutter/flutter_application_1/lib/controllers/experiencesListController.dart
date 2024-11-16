@@ -18,11 +18,12 @@ class ExperienceListController extends GetxController {
     try {
       isLoading(true);  // Establecemos el estado de carga a true
       var experiences = await experienceService.getExperiences();
+      
       if (experiences != null) {
         experienceList.assignAll(experiences); // Asignamos las experiencias a la lista
-      } else {
+      } /*else {
         experienceList.clear(); // Asegurarse de limpiar la lista si no hay datos
-      }
+      }*/
     } catch (e) {
       print("Error fetching experiences: $e");
     } finally {
