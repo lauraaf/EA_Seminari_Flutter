@@ -13,12 +13,11 @@ class ExperienciesPage extends StatefulWidget {
 class _ExperienciesPageState extends State<ExperienciesPage> {
   final ExperienceController experienceController = Get.put(ExperienceController());
   final ExperienceListController experienceListController = Get.put(ExperienceListController());
-  final ExperienceService experienceService = Get.put(ExperienceService());
 
   @override
   void initState() {
     super.initState();
-    experienceService.getExperiences(); // Llamada a getExperiences al entrar en la página
+    experienceListController.fetchExperiences(); // Asegúrate de obtener experiencias al iniciar la página.
   }
 
   @override
@@ -40,7 +39,11 @@ class _ExperienciesPageState extends State<ExperienciesPage> {
                   return ListView.builder(
                     itemCount: experienceListController.experienceList.length,
                     itemBuilder: (context, index) {
-                      return ExperienceCard(experience: experienceListController.experienceList[index]);
+                      final experience = experienceListController.experienceList[index];
+                      return ExperienceCard(
+                        experience: experience,
+                        onDelete: () => experienceListController.deleteExperienceByDescription(experience.description),
+                      );
                     },
                   );
                 }
@@ -50,47 +53,7 @@ class _ExperienciesPageState extends State<ExperienciesPage> {
             // Formulario de registro de experiencia
             Expanded(
               flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Crear Nueva Experiencia',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  TextField(
-                    controller: experienceController.ownerController,
-                    decoration: InputDecoration(
-                      labelText: 'Propietario',
-                      //errorText: experienceController.ownerError.value,
-                    ),
-                  ),
-                  TextField(
-                    controller: experienceController.participantsController,
-                    decoration: InputDecoration(
-                      labelText: 'Participantes',
-                      //errorText: experienceController.participantsError.value,
-                    ),
-                  ),
-                  TextField(
-                    controller: experienceController.descriptionController,
-                    decoration: InputDecoration(
-                      labelText: 'Descripción',
-                     // errorText: experienceController.descriptionError.value,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Obx(() {
-                    if (experienceController.isLoading.value) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return ElevatedButton(
-                        onPressed: experienceController.createExperience,
-                        child: Text('Crear Experiencia'),
-                      );
-                    }
-                  }),
-                ],
-              ),
+              child: ExperienceForm(experienceController: experienceController),
             ),
           ],
         ),
@@ -99,10 +62,66 @@ class _ExperienciesPageState extends State<ExperienciesPage> {
   }
 }
 
+// Widget reutilizable para el formulario de experiencia
+class ExperienceForm extends StatelessWidget {
+  final ExperienceController experienceController;
+
+  const ExperienceForm({Key? key, required this.experienceController}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Crear Nueva Experiencia',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        TextField(
+          controller: experienceController.ownerController,
+          decoration: InputDecoration(
+            labelText: 'Propietario',
+            errorText: experienceController.ownerError.value,
+          ),
+        ),
+        TextField(
+          controller: experienceController.participantsController,
+          decoration: InputDecoration(
+            labelText: 'Participantes',
+            errorText: experienceController.participantsError.value,
+          ),
+        ),
+        TextField(
+          controller: experienceController.descriptionController,
+          decoration: InputDecoration(
+            labelText: 'Descripción',
+            errorText: experienceController.descriptionError.value,
+          ),
+        ),
+        SizedBox(height: 16),
+        Obx(() {
+          if (experienceController.isLoading.value) {
+            return CircularProgressIndicator();
+          } else {
+            return ElevatedButton(
+              onPressed: () {
+                experienceController.createExperience();
+              },
+              child: Text('Crear Experiencia'),
+            );
+          }
+        }),
+      ],
+    );
+  }
+}
+
+// Widget reutilizable para mostrar una tarjeta de experiencia
 class ExperienceCard extends StatelessWidget {
   final ExperienceModel experience;
+  final VoidCallback onDelete;
 
-  const ExperienceCard({Key? key, required this.experience}) : super(key: key);
+  const ExperienceCard({Key? key, required this.experience, required this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +150,15 @@ class ExperienceCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(experience.participants),
+            const SizedBox(height: 16),
+            // Botón para eliminar experiencia
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: onDelete,
+              ),
+            ),
           ],
         ),
       ),
