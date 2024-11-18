@@ -30,10 +30,6 @@ class BottomNavScaffold extends StatelessWidget {
                 icon: Icon(Icons.local_activity),
                 label: 'Experiencias',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Perfil',
-              ),
             ],
           )),
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/experience.dart';
 import 'package:flutter_application_1/controllers/experiencesListController.dart';
 import 'package:flutter_application_1/controllers/experiencesController.dart';
-import 'package:flutter_application_1/models/experienceModel.dart';
+import 'package:flutter_application_1/Widgets/experienceCard.dart';
 import 'package:get/get.dart';
 
 class ExperienciesPage extends StatefulWidget {
@@ -112,56 +111,6 @@ class ExperienceForm extends StatelessWidget {
           }
         }),
       ],
-    );
-  }
-}
-
-// Widget reutilizable para mostrar una tarjeta de experiencia
-class ExperienceCard extends StatelessWidget {
-  final ExperienceModel experience;
-  final VoidCallback onDelete;
-
-  const ExperienceCard({Key? key, required this.experience, required this.onDelete}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Descripción:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(experience.description),
-            const SizedBox(height: 16),
-            Text(
-              'Propietario:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text('Nombre: ${experience.owner}'),
-            const SizedBox(height: 8),
-            Text(
-              'Participantes:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(experience.participants),
-            const SizedBox(height: 16),
-            // Botón para eliminar experiencia
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: onDelete,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
